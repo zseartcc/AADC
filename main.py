@@ -4,7 +4,9 @@ import math
 import datetime
 import time
 
-while(True):
+rounds = 1
+while(rounds > 0):
+    rounds -= 1
     now = datetime.datetime.utcnow()
     hour = now.strftime("%H")
     min = int(now.strftime("%M"))
@@ -104,7 +106,7 @@ while(True):
             planned_arrmin = "0" + str(planned_arrmin)
         planned_arrtime = str(planned_arrhour) + str(planned_arrmin)
         flight.update({'planned_arrtime': planned_arrtime})
-        
+
 
 
     try:
@@ -127,7 +129,7 @@ while(True):
 
     DENArr = []
     for item in online:
-        if item["planned_destairport"] == "KDEN":
+        if item["planned_destairport"] in ["KSEA", "KPDX"]:
             DENArr.append(item)
 
     onlineCallsigns = []
@@ -164,72 +166,27 @@ while(True):
             flight.update({'status': "Departing"})
 
     def Gate(flight):
+        gates = [
+            # KSEA
+            "CHINS",
+            "GLASR",
+            "HAWKZ",
+            "JAWBN",
+            "MARNR",
+            "OLM",
+            # KPDX
+            'HELNS',
+            'HHOOD',
+            'KRATR',
+            'OCITY',
+            'TMBRS',
+        ]
         route = flight['planned_route'].upper()
-        gate = ""
-        if "AALLE" in route:
-            gate = "AALLE"
-        elif "LAWGR" in route:
-            gate = "LAWGR"
-        elif "CLASH" in route:
-            gate = "CLASH"
-        elif "NIIXX" in route:
-            gate = "NIIXX"
-        elif "TBARR" in route:
-            gate = "TBARR"
-        elif "SSKII" in route:
-            gate = "SSKII"
-        elif "LONGZ" in route:
-            gate = "LONGZ"
-        elif "FLATI" in route:
-            gate = "FLATI"
-        elif "KIPPR" in route:
-            gate = "LANDR"
-        elif "ANCHR" in route:
-            gate = "LANDR"
-        elif "LANDR" in route:
-            gate = "LANDR"
-        elif "JAGGR" in route:
-            gate = "DANDD"
-        elif "PURRL" in route:
-            gate = "DANDD"
-        elif "DANDD" in route:
-            gate = "DANDD"
-        elif "PEEKK" in route:
-            gate = "LARKS"
-        elif "LDORA" in route:
-            gate = "LARKS"
-        elif "LARKS" in route:
-            gate = "LARKS"
-        elif "TSHNR" in route:
-            gate = "RAMMS"
-        elif "MOLTN" in route:
-            gate = "RAMMS"
-        elif "RAMMS" in route:
-            gate = "RAMMS"
-        elif "KAILE" in route:
-            gate = "TOMSN"
-        elif "FRNCH" in route:
-            gate = "TOMSN"
-        elif "TOMSN" in route:
-            gate = "TOMSN"
-        elif "ZPLYN" in route:
-            gate = "QUAIL"
-        elif "BOSSS" in route:
-            gate = "QUAIL"
-        elif "QUAIL" in route:
-            gate = "QUAIL"
-        elif "TELLR" in route:
-            gate = "POWDR"
-        elif "CREDE" in route:
-            gate = "POWDR"
-        elif "POWDR" in route:
-            gate = "POWDR"
-        elif "KOHOE" in route:
-            gate = "SAYGE"
-        elif "WAHUU" in route:
-            gate = "SAYGE"
-        else:
-            gate = "ERROR"
+        gate = "UNKNOWN"
+        for g in gates:
+            if g in route:
+                gate = g
+                break
         flight.update({"gate": gate})
 
     def index(flight):
@@ -253,4 +210,3 @@ while(True):
         index(item)
     with open('./public/denver-data.json', 'w') as json_file:
 	    json.dump(activedata, json_file)
-    time.sleep(60)
