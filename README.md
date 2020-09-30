@@ -1,3 +1,4 @@
 # AADC
 Airport Arrival Demand Chart - VATSIM
-# AADC
+# AADCv2
+Massive update a ton of stuff check the changelog.
