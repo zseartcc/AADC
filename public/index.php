@@ -9,7 +9,7 @@
         </head>
         <body style="background-color:#FFFFFF">
                 <aadc-app _nghost-c0="" ng-version="4.3.5">
-                        <div _ngcontent-c0="" id="version">v2.0.0 - Raaj Patel</div>
+                        <div _ngcontent-c0="" id="version"><a href="./changelog.txt">v2.1.0 - Raaj Patel</a></div>
                                 <div _ngcontent-c0="" class="container-fluid">
                                         <div _ngcontent-c0="" class="row">
                                         <div _ngcontent-c0="" style="text-align: center;">

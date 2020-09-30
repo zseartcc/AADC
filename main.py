@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 import urllib.request
 import json
 import math
@@ -147,10 +149,9 @@ while(True):
                     flight.update({'latitude': item['latitude']})
                     flight.update({'longitude': item['longitude']})
                     flight.update({'groundspeed': item['groundspeed']})
-    if(int(now.strftime("%M")) == 0):
-        for item in activedata:
-            if not item['callsign'] in onlineCallsigns:
-                activedata.remove(item)
+    for item in activedata:
+        if not item['callsign'] in onlineCallsigns:
+            activedata.remove(item)
 
 
     def flightactive(flight):
@@ -253,4 +254,15 @@ while(True):
         index(item)
     with open('./public/denver-data.json', 'w') as json_file:
 	    json.dump(activedata, json_file)
+
+    if(min == 0):
+            with open('./public/AAR.txt', 'r') as json_file:
+                    txt = json.loads(json_file.readline())
+                    txt.pop(0)
+                    txt.append(int(txt[len(txt)-1]))
+                    f = open('./public/AAR.txt', 'w')
+                    f.write(str(txt))
+                    f.close()
+
     time.sleep(60)
+

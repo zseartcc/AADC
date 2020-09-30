@@ -1,0 +1,11 @@
+---- AADC V2.1 ----
+*AAR, moves with time.
+*Increase reliability of main python program.
+*Added an API for support with future IDS.
+*Publishes current AAR for other applications to grab.
+*Added temporary flight list in the console.
+*Added the ChangeLog :)
+
+---- AADC V2 ----
+*Completely Reworked logic and aircraft calculations
+

@@ -25,13 +25,17 @@ var FLATI = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
 var ERROR = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 var data = []
+var AARNumbers
 
 $.get('/denver-data.json', myData => {
 	data = myData;
+$.get('/AAR.txt', Data => {
+	AARNumbers = JSON.parse(Data);
 
 //data = JSON.parse(data)
 //Array.prototype.forEach.call(data, flight => {
 data.forEach(flight => {
+    console.log(flight['callsign'] + " ETA:" + flight['planned_arrtime']+"z DEPICAO:"+ flight["planned_depairport"] + " ARRGate:" + flight["gate"])
     index = flight['index']
     gate = flight['gate']
     status = flight['status']
@@ -161,24 +165,25 @@ var myChart = new Chart(ctx, {
 
                 }, {
                         label: 'Arrival Rate',
-                        data: [114, 114, 114, 114, 114, 114, 114, 114, 114, 114, 114, 114, 114, 114, 114, 114],
+                        data: AARNumbers,
                         type: 'line',
                         backgroundColor: 'rgba(0,0,0, 0.01)',
                         borderColor: 'rgba(0, 0, 0, 1)',
                         pointRadius: 0,
-                        pointHitRadius: 50
+                        pointHitRadius: 50,
+			lineTension: 0
         }]
     },
     options: {
-                maintainAspectRatio: false,
-                scales: {
-                        xAxes: [{
+            maintainAspectRatio: false,
+	    scales: {
+                xAxes: [{
                 stacked: true
             }],
             yAxes: [{
                 ticks: {
                     suggestedMin: 0,
-                    suggestedMax: 150,
+                    suggestedMax: 175,
                     stepSize: 25
                 },
                                 stacked: true
@@ -325,7 +330,7 @@ var myChart = new Chart(ctx2, {
             yAxes: [{
 		ticks: {
 		    suggestedMin: 0,
-                    suggestedMax: 75
+                    suggestedMax: 150
 		},
                 stacked: true
             }]
@@ -337,3 +342,4 @@ var myChart = new Chart(ctx2, {
 
 });
 
+});
